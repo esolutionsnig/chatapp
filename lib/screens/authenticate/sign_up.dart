@@ -1,17 +1,18 @@
 import 'package:chatapp/components/color.dart';
-import 'package:chatapp/services/auth.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
+import '../../services/auth.dart';
+
+class SignUp extends StatefulWidget {
 
   final Function toggleView;
-  SignIn({ this.toggleView });
-  
+  SignUp({ this.toggleView });
+
   @override
-  _SignInState createState() => _SignInState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignUpState extends State<SignUp> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
@@ -28,11 +29,11 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.orange[900],
         elevation: 0.0,
-        title: Text('Sign In'),
+        title: Text('Sign Up'),
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text('Sign Up'),
+            label: Text('Sign In'),
             onPressed: () {
               widget.toggleView();
             },
@@ -64,17 +65,16 @@ class _SignInState extends State<SignIn> {
               RaisedButton(
                 color: cprimary,
                 child: Text(
-                  "Sign In",
+                  "Sign Up",
                   style: TextStyle(
                     color: cwhite
                   ),
                 ),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    print('valid');
-                    dynamic result =  await _auth.signInWithEmailAndPassword(email, password);
+                    dynamic result =  await _auth.signUpWithEmailAndPassword(email, password);
                     if (result == null) {
-                      setState(() => error = 'Authentication failed, please supply valid credential');
+                      setState(() => error = 'Sign Up, please supply valid data');
                     }
                   }
                 },
@@ -86,7 +86,7 @@ class _SignInState extends State<SignIn> {
                   color: cred,
                   fontSize: 14.0
                 ),
-              ),
+              )
             ],
           ),
         ),
